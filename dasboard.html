@@ -1,0 +1,44 @@
+<!-- ...existing code... -->
+    </div>
+    <!-- Tambahkan form login admin di bawah tabel siswa -->
+    <div class="container" style="max-width:400px; margin-top:24px;">
+        <h2 style="color:#3867d6; text-align:center;">Login Admin</h2>
+        <div id="loginError" style="color:#e74c3c; text-align:center; margin-bottom:10px;"></div>
+        <form id="loginForm">
+            <div style="display:flex; flex-direction:column; gap:12px;">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+        </div>
+    <div class="container" style="max-width:400px; margin-top:24px;">
+        <button onclick="window.location.href='database.html';" style="width:100%;padding:10px 0;background:#3867d6;color:#fff;border:none;border-radius:6px;font-weight:700;cursor:pointer;" >Login</button>
+    </div>
+        </form>
+    </div>
+    <script>
+        // ...existing code...
+
+        // LOGIN ADMIN
+        const USERNAME = "admin";
+        const PASSWORD = "12345";
+
+        document.getElementById("loginForm").onsubmit = function(e) {
+            e.preventDefault();
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim();
+
+            // Cek data siswa sudah diisi minimal 1
+            if (siswa.length === 0) {
+                document.getElementById("loginError").textContent = "Isi data siswa terlebih dahulu sebelum login!";
+                return;
+            }
+
+            // Validasi login
+            if (username === USERNAME && password === PASSWORD) {
+                window.location.href = "dashboard.html"; // Ganti sesuai halaman tujuan
+            } else {
+                document.getElementById("loginError").textContent = "Username atau password salah!";
+            }
+        };
+    </script>
+<!-- ...existing code... -->

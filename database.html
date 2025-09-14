@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Siswa Pondok</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #f5f6fa;
+            margin: 0;
+            color: #222;
+        }
+        header {
+            background: linear-gradient(90deg, #2d98da, #3867d6);
+            color: #fff;
+            padding: 40px 0 50px 0;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.2em;
+            letter-spacing: 2px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 32px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(44,62,80,0.08);
+            padding: 32px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 24px;
+        }
+        th, td {
+            padding: 12px 8px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+        th {
+            background: #3867d6;
+            color: #fff;
+        }
+        tr:hover td {
+            background: #f1f2f6;
+        }
+        button, input[type="submit"] {
+            background: #3867d6;
+            color: #fff;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+            margin-right: 6px;
+            transition: background 0.2s;
+        }
+        button:hover, input[type="submit"]:hover {
+            background: #2d98da;
+        }
+        .form-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+        .form-row input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1em;
+        }
+        .edit-row input {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Data Siswa Pondok</h1>
+    </header>
+    <div class="container">
+        <form id="addForm">
+            <div class="form-row">
+                <input type="text" id="nama" placeholder="Nama Siswa" required>
+                <input type="text" id="kelas" placeholder="Kelas" required>
+                 <input type="text" id="pendidikan" placeholder="Pendidikan" required>
+                 <input type="text" id="alamat" placeholder="Alamat" required>
+                  <input type="text" id="no hp" placeholder="No Hp" required>
+                   <input type="text" id="nama orang tua" placeholder="Nama Orang Tua" required>
+                <input type="submit" value="Tambah Siswa">
+            </div>
+        </form>
+        <table id="siswaTable">
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>Kelas</th>
+                      <th>Pendidikan</th>
+                       <th>Alamat</th>
+                       <th>No Hp</th>
+                        <th>Nama Orang Tua</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data siswa akan muncul di sini -->
+            </tbody>
+        </table>
+    </div>
+    <script>
+        let siswa = [
+            { nama: "Ahmad", kelas: "7A",pendidikan:"SMP", alamat : "Jl. Melati 1" ,nohp:"08123456789",namaorangtua:"Budi" },
+            { nama: "Siti", kelas: "8B",pendidikan:"SMP" ,alamat : "Jl. Kenanga 5" ,nohp:"08198765432",namaorangtua:"Ani" }
+        ];
+
+        function renderTable() {
+            const tbody = document.querySelector("#siswaTable tbody");
+            tbody.innerHTML = "";
+            siswa.forEach((s, i) => {
+                const tr = document.createElement("tr");
+                if (s.editing) {
+                    tr.classList.add("edit-row");
+                    tr.innerHTML = `
+                        <td><input type="text" value="${s.nama}" id="edit-nama-${i}"></td>
+                        <td><input type="text" value="${s.kelas}" id="edit-kelas-${i}"></td>
+                         <td><input type="text" value="${s.pendidikan}" id="edit-pendidikan-${i}"></td>
+                        <td><input type="text" value="${s.alamat}" id="edit-alamat-${i}"></td>
+                         <td><input type="text" value="${s.nohp}" id="edit-nohp-${i}"></td>
+                          <td><input type="text" value="${s.namaorangtua}" id="edit-namaorangtua-${i}"></td>
+                        <td>
+                            <button onclick="saveEdit(${i})">Simpan</button>
+                            <button onclick="cancelEdit(${i})">Batal</button>
+                        </td>
+                    `;
+                } else {
+                    tr.innerHTML = `
+                        <td>${s.nama}</td>
+                        <td>${s.kelas}</td>
+                        <td>${s.pendidikan}</td>
+                        <td>${s.alamat}</td>
+                        <td>${s.nohp}</td>
+                        <td>${s.namaorangtua}</td>
+                        <td>
+                            <button onclick="editSiswa(${i})">Edit</button>
+                            <button onclick="deleteSiswa(${i})">Hapus</button>
+                        </td>
+                    `;
+                }
+                tbody.appendChild(tr);
+            });
+        }
+
+        document.getElementById("addForm").onsubmit = function(e) {
+            e.preventDefault();
+            const nama = document.getElementById("nama").value.trim();
+            const kelas = document.getElementById("kelas").value.trim();
+             const pendidikan = document.getElementById("pendidikan").value.trim();
+            const alamat = document.getElementById("alamat").value.trim();
+             const nohp = document.getElementById("no hp").value.trim();
+              const namaorangtua = document.getElementById("nama orang tua").value.trim();
+
+            if (nama && kelas && alamat) {
+                siswa.push({ nama, kelas, pendidikan,alamat,nohp,namaorangtua });
+                renderTable();
+                this.reset();
+            }
+        };
+
+        window.editSiswa = function(i) {
+            siswa[i].editing = true;
+
+                    };
+
+        window.saveEdit = function(i) {
+            siswa[i].nama = document.getElementById(`edit-nama-${i}`).value.trim();
+            siswa[i].kelas = document.getElementById(`edit-kelas-${i}`).value.trim();
+             siswa[i].pendidikan = document.getElementById(`edit-pendidikan-${i}`).value.trim();
+            siswa[i].alamat = document.getElementById(`edit-alamat-${i}`).value.trim();
+             siswa[i].nohp = document.getElementById(`edit-no hp-${i}`).value.trim();
+              siswa[i].namaorangtua = document.getElementById(`edit-nama orang tua-${i}`).value.trim();
+            delete siswa[i].editing;
+            renderTable();
+        };
+
+        window.cancelEdit = function(i) {
+            delete siswa[i].editing;
+            renderTable();
+        };
+
+        window.deleteSiswa = function(i) {
+            if (confirm("Yakin ingin menghapus data siswa ini?")) {
+                siswa.splice(i, 1);
+                renderTable();
+            }
+        };
+
+        renderTable();
+    </script>
+</body>
+</html>

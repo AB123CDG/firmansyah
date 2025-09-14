@@ -1,28 +1,246 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Form</title>
-  <link rel="stylesheet" href="stylee.css">
+    <meta charset="UTF-8">
+    <title>Login & Data Murid Pondok</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #f5f6fa;
+            margin: 0;
+            color: #222;
+        }
+        .centered {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .card {
+            background: #fff;
+            padding: 32px 28px;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(44,62,80,0.08);
+            min-width: 320px;
+        }
+        h2 {
+            text-align: center;
+            color: #3867d6;
+            margin-bottom: 24px;
+        }
+        .form-row {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+        .form-row input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1em;
+        }
+        button, input[type="submit"] {
+            background: #3867d6;
+            color: #fff;
+            border: none;
+            padding: 10px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+            margin-top: 8px;
+            transition: background 0.2s;
+            width: 100%;
+        }
+        button:hover, input[type="submit"]:hover {
+            background: #2d98da;
+        }
+        .error {
+            color: #e74c3c;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .container {
+            max-width: 900px;
+            margin: 32px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(44,62,80,0.08);
+            padding: 32px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 24px;
+        }
+        th, td {
+            padding: 12px 8px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+        th {
+            background: #3867d6;
+            color: #fff;
+        }
+        tr:hover td {
+            background: #f1f2f6;
+        }
+        .logout-btn {
+            float: right;
+            margin-top: -40px;
+            margin-right: 10px;
+            background: #e74c3c;
+        }
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+    </style>
 </head>
 <body>
-  <div class="login-container">
-    <h2>Silakan login terlebih dahulu</h2>
-    <form action="#" method="POST">
-      <label for="username">Nama pengguna:</label>
-      <input type="text" id="username" name="username" placeholder="Masukkan nama pengguna" required>
+    <div id="loginSection" class="centered">
+        <div class="card">
+            <h2>Login Admin</h2>
+            <div id="loginError" class="error"></div>
+            <form id="loginForm">
+                <div class="form-row">
+                    <input type="text" id="username" placeholder="Username" required>
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+                <input type="submit" value="Login">
+            </form>
+        </div>
+    </div>
+    <div id="mainSection" style="display:none;">
+        <header>
+            <h1>Data Murid Pondok</h1>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </header>
+        <div class="container">
+            <form id="addForm">
+                <div class="form-row">
+                    <input type="text" id="nama" placeholder="Nama Murid" required>
+                    <input type="text" id="kelas" placeholder="Kelas" required>
+                    <input type="text" id="alamat" placeholder="Alamat" required>
+                    <input type="submit" value="Tambah Murid">
+                </div>
+            </form>
+            <table id="muridTable">
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>Kelas</th>
+                        <th>Alamat</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data murid akan muncul di sini -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        // Dummy login data
+        const USERNAME = "admin";
+        const PASSWORD = "12345";
 
-      <label for="password">Kata sandi:</label>
-      <input type="password" id="password" name="password" placeholder="Masukkan kata sandi" required>
+        // Murid data
+        let murid = [
+            { nama: "Ahmad", kelas: "7A", alamat: "Jl. Melati 1" },
+            { nama: "Siti", kelas: "8B", alamat: "Jl. Mawar 2" }
+        ];
 
-      <label>
-        <input type="checkbox" name="remember"> Ingat saya
-      </label>
-      <button type="submit">Login</button>
-      <p><a href="#">Lupa kata sandi Anda?</a></p>
-      <p>Belum punya akun? <a href="#">Daftar sekarang</a>.</p>
-    </form>
-  </div>
+        // Login logic
+        document.getElementById("loginForm").onsubmit = function(e) {
+            e.preventDefault();
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim();
+            if (username === USERNAME && password === PASSWORD) {
+                document.getElementById("loginSection").style.display = "none";
+                document.getElementById("mainSection").style.display = "block";
+                renderTable();
+            } else {
+                document.getElementById("loginError").textContent = "Username atau password salah!";
+            }
+        };
+
+        function logout() {
+            document.getElementById("mainSection").style.display = "none";
+            document.getElementById("loginSection").style.display = "flex";
+            document.getElementById("loginForm").reset();
+            document.getElementById("loginError").textContent = "";
+        }
+
+        // Table logic
+        function renderTable() {
+            const tbody = document.querySelector("#muridTable tbody");
+            tbody.innerHTML = "";
+            murid.forEach((m, i) => {
+                const tr = document.createElement("tr");
+                if (m.editing) {
+                    tr.classList.add("edit-row");
+                    tr.innerHTML = `
+                        <td><input type="text" value="${m.nama}" id="edit-nama-${i}"></td>
+                        <td><input type="text" value="${m.kelas}" id="edit-kelas-${i}"></td>
+                        <td><input type="text" value="${m.alamat}" id="edit-alamat-${i}"></td>
+                        <td>
+                            <button onclick="saveEdit(${i})">Simpan</button>
+                            <button onclick="cancelEdit(${i})">Batal</button>
+                        </td>
+                    `;
+                } else {
+                    tr.innerHTML = `
+                        <td>${m.nama}</td>
+                        <td>${m.kelas}</td>
+                        <td>${m.alamat}</td>
+                        <td>
+                            <button onclick="editMurid(${i})">Edit</button>
+                            <button onclick="deleteMurid(${i})">Hapus</button>
+                        </td>
+                    `;
+                }
+                tbody.appendChild(tr);
+            });
+        }
+
+        document.getElementById("addForm").onsubmit = function(e) {
+            e.preventDefault();
+            const nama = document.getElementById("nama").value.trim();
+            const kelas = document.getElementById("kelas").value.trim();
+            const alamat = document.getElementById("alamat").value.trim();
+            if (nama && kelas && alamat) {
+                murid.push({ nama, kelas, alamat });
+                renderTable();
+                this.reset();
+            }
+        };
+
+        window.editMurid = function(i) {
+            murid[i].editing = true;
+            renderTable();
+        };
+
+        window.saveEdit = function(i) {
+            murid[i].nama = document.getElementById(`edit-nama-${i}`).value.trim();
+            murid[i].kelas = document.getElementById(`edit-kelas-${i}`).value.trim();
+            murid[i].alamat = document.getElementById(`edit-alamat-${i}`).value.trim();
+            delete murid[i].editing;
+            renderTable();
+        };
+
+        window.cancelEdit = function(i) {
+            delete murid[i].editing;
+            renderTable();
+        };
+
+        window.deleteMurid = function(i) {
+            if (confirm("Yakin ingin menghapus data murid ini?")) {
+                murid.splice(i, 1);
+                renderTable();
+            }
+        };
+    </script>
 </body>
 </html>
