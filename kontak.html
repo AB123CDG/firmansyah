@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMK Pelita Bandung</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+    }
+
+    /* Navbar */
+    header {
+      background: #0a8f06; /*hijau terang */
+      color: white;
+      padding: 15px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    nav ul li {
+      margin-left: 20px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #ffd700; /* kuning emas */
+    }
+
+    /* Section */
+    section {
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    #beranda {
+      background: #0a8f06;
+      color: white;
+      padding: 100px 20px;
+    }
+
+    #tentang {
+      background: white;
+    }
+
+    #galeri {
+      background: #f0f0f0;
+    }
+
+    #kontak {
+      background: white;
+    }
+
+    .btn {
+      background: #ffd700;
+      color: #0a8f06;
+      padding: 10px 20px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #ffae00;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #0a8f06;
+      color: white;
+    }
+   header {
+  background: #0a8f06;
+  color: white;
+  padding: 20px;
+  display: flex;       /* biar logo & teks sejajar */
+  align-items: center; /* vertikal rata tengah */
+}
+
+header .logo {
+  width: 60px;  /* ukuran logo */
+  height: auto;
+  margin-right: 15px; /* jarak antara logo dan teks */
+}
+
+header .judul {
+  text-align: left; /* teks rata kiri */
+}
+  </style>
+</head>
+<body>
+
+
+  <header>
+    <h1>SMK Pelita Bandung</h1>
+    <nav>
+      <ul>
+        <li><a href="web smk pelita bandung.html">Beranda</a></li>
+        <li><a href="tentang.html">Tentang Kami</a></li>
+        <li><a href="galeri.html">Galeri</a></li>
+        <li><a href="kontak.html">Kontak</a></li>
+      </ul>
+    </nav>
+  </header>
+
+
+  <div class="container">
+    <h2>Informasi Kontak</h2>
+    <div class="info">
+      <p><strong>Alamat:</strong>Jl. Sekejati No. 9, Cikutra, Cibeunying Kidul, Sukapada, Kec. Cibeunying Kidul, Kota Bandung, Jawa Barat 40124</p>
+      <p><strong>Email:</strong>smkpelitabandung@gmail.com</p>
+      <p><strong>Telepon:</strong>+62 877-2220-5444</p>
+    </div>
+
+    <h2>Kirim Pesan</h2>
+    <form>
+      <label for="nama">Nama</label>
+      <input type="text" id="nama" name="nama" placeholder="Masukkan nama anda">
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Masukkan email anda">
+
+      <label for="pesan">Pesan</label>
+      <textarea id="pesan" name="pesan" rows="5" placeholder="Tulis pesan anda..."></textarea>
+
+      <button type="submit">Kirim</button>
+    </form>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 SMK Pelita | Semua Hak Dilindungi</p>
+  </footer>
+
+</body>
+</html>

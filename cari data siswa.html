@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cek Data Siswa | SMK Pelita Bandung</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+    }
+
+    /* Navbar */
+    header {
+      background: #0a8f06; /* hijau terang */
+      color: white;
+      padding: 15px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    nav ul li {
+      margin-left: 20px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #ffd700; /* kuning emas */
+    }
+
+    /* Section */
+    section {
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    #beranda {
+      background: linear-gradient(to right, #1e3c72, #2a5298);
+      color: white;
+      padding: 100px 20px;
+    }
+
+    #tentang {
+      background: white;
+    }
+
+    #galeri {
+      background: #f0f0f0;
+    }
+
+    #kontak {
+      background: white;
+    }
+
+    .btn {
+      background: #ffd700;
+      color: #0a8f06;
+      padding: 10px 20px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #ffae00;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #0a8f06;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>SMK Pelita Bandung</h1>
+    <nav>
+      <ul>
+        <li><a href="#beranda">Beranda</a></li>
+        <li><a href="#tentang">Tentang Kami</a></li>
+        <li><a href="#galeri">Galeri</a></li>
+        <li><a href="#kontak">Kontak</a></li>
+         <li><a href="cekdata.html">data siswa</a></li>
+      </ul>
+    </nav>
+  </header>
+
+    <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+    }
+
+    header {
+      background: #1e3c72;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+    }
+
+    section {
+      padding: 20px;
+    }
+
+    form {
+      max-width: 500px;
+      margin: auto;
+ background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px;
+      width: 100%;
+      background: #1e3c72;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #2a5298;
+    }
+
+    .biodata-card {
+      max-width: 500px;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .biodata-card h3 {
+      margin-top: 0;
+      color: #1e3c72;
+    }
+
+    .biodata-card p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <section>
+    <form id="biodataForm">
+      <label for="nik">NIK:</label>
+      <input type="text" id="nik" required>
+
+      <label for="nama">Nama:</label>
+      <input type="text" id="nama" required>
+
+      <label for="kelas">Kelas:</label>
+      <select id="kelas" required>
+        <option value="">-- Pilih Kelas --</option>
+        <option value="X">X</option>
+        <option value="XI">XI</option>
+        <option value="XII">XII</option>
+      </select>
+
+      <label for="jurusan">Jurusan:</label>
+      <select id="jurusan" required>
+        <option value="">-- Pilih Jurusan --</option>
+        <option value="TKJ">TKJ</option>
+        <option value="RPL">RPL</option>
+        <option value="MM">MM</option>
+        <option value="AKL">AKL</option>
+      </select>
+
+      <label for="alamat">Alamat:</label>
+      <textarea id="alamat" rows="3" required></textarea>
+
+      <button type="submit">Tampilkan Biodata</button>
+    </form>
+  </section>
+
+  <section id="hasilBiodata"></section>
+
+  <script>
+    document.getElementById("biodataForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      // Ambil data dari form
+      let nik = document.getElementById("nik").value;
+      let nama = document.getElementById("nama").value;
+      let kelas = document.getElementById("kelas").value;
+      let jurusan = document.getElementById("jurusan").value;
+      let alamat = document.getElementById("alamat").value;
+
+      // Tampilkan biodata di kartu
+      let hasil = `
+        <div class="biodata-card">
+          <h3>Biodata Siswa</h3>
+          <p><strong>NIK:</strong> ${nik}</p>
+          <p><strong>Nama:</strong> ${nama}</p>
+          <p><strong>Kelas:</strong> ${kelas}</p>
+          <p><strong>Jurusan:</strong> ${jurusan}</p>
+          <p><strong>Alamat:</strong> ${alamat}</p>
+        </div>
+      `;
+      document.getElementById("hasilBiodata").innerHTML = hasil;
+
+      // Reset form
+      document.getElementById("biodataForm").reset();
+    });
+  </script>
+
+</body>
+</html>
